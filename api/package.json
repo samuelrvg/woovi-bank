@@ -2,5 +2,28 @@
   "name": "api",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node seed.js",
+    "dev": "nodemon index.js",
+    "build": "echo 'No build step defined'",
+    "test": "echo 'No tests defined' && exit 0",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "apollo-server-koa": "^3.13.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.1",
+    "mongoose": "^8.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2"
+  }
 }
