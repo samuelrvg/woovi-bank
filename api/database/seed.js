@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import User from './src/models/User.js';
-import Account from './src/models/Account.js';
-import Transaction from './src/models/Transaction.js';
+import User from '../src/models/User.js';
+import Account from '../src/models/Account.js';
+import Transaction from '../src/models/Transaction.js';
 
 // Conexão com o MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -14,12 +14,12 @@ async function seedDatabase() {
   try {
     await mongoose.connection.dropDatabase();
 
-    const passwordHash = await bcrypt.hash('password123', 10);
+    const passwordHash = await bcrypt.hash('woovi#123', 10);
 
     // Criar usuários
     const users = await User.insertMany([
-      { name: 'Alice', cpf: '12345678901', password: passwordHash },
-      { name: 'Bob', cpf: '09876543210', password: passwordHash },
+      { name: 'Alice', cpf: '77005712013', password: passwordHash },
+      { name: 'Bob', cpf: '59091028009', password: passwordHash },
     ]);
 
     // Criar contas

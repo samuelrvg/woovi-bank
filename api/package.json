@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "seed": "node seed.js",
+    "seed": "node ./database/seed.js",
     "dev": "nodemon index.js",
     "build": "echo 'No build step defined'",
     "test": "echo 'No tests defined' && exit 0",
