@@ -1,5 +1,3 @@
-"use client"
-
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../graphql/mutations';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +45,7 @@ interface LoginVariables {
   password: string;
 }
 
-export function LoginForm() {
+export default function SignIn() {
   const navigate = useNavigate();
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,8 +79,8 @@ export function LoginForm() {
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <Card className="max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl mb-4">Sign In</CardTitle>
+            <CardDescription className='mb-2'>
               Enter your CPF and password to login to your account
             </CardDescription>
           </CardHeader>
@@ -128,7 +126,7 @@ export function LoginForm() {
                   )}
                 />
                 <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? 'Logging in...' : 'Sign In'}
                 </Button>
                 {error && <p className="text-red-500 mt-2">Error: {error.message}</p>}
               </form>
@@ -144,5 +142,3 @@ export function LoginForm() {
     </div>
   );
 }
-
-export default LoginForm;
