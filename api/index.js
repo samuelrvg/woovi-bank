@@ -4,7 +4,6 @@ import bodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 import { ApolloServer } from 'apollo-server-koa';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import { typeDefs } from './src/schemas/typeDefs.js';
 import { resolvers } from './src/resolvers/resolvers.js';
 import { authMiddleware } from './middlewares/authMiddleware.js';
@@ -30,13 +29,14 @@ async function startServer() {
 
 startServer();
 
+app.use(router.routes());
+app.use(bodyParser());
+app.use(authMiddleware);
+
+// router.get('/api', authMiddleware, (ctx) => {})
 router.get('/api', (ctx) => {
   ctx.body = { message: 'Hello, Koa API!' };
 });
-
-app.use(router.routes())
-app.use(bodyParser());
-app.use(authMiddleware);
 
 app.listen({ port: process.env.PORT }, () =>
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT}`)

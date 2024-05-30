@@ -9,7 +9,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export const resolvers = {
   Query: {
     currentUser: async (_, __, { user }) => {
-      console.log('user', user)
       if (!user) throw new Error('Not authenticated');
       return await User.findById(user.id);
     },
