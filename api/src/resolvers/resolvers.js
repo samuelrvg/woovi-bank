@@ -4,9 +4,12 @@ import User from '../models/User.js';
 import Account from '../models/Account.js';
 import Transaction from '../models/Transaction.js';
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export const resolvers = {
   Query: {
     currentUser: async (_, __, { user }) => {
+      console.log('user', user)
       if (!user) throw new Error('Not authenticated');
       return await User.findById(user.id);
     },
@@ -20,7 +23,7 @@ export const resolvers = {
       const user = new User({ name, cpf, password: hashedPassword });
       await user.save();
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id }, JWT_SECRET);
       return { ...user._doc, token };
     },
     login: async (_, { cpf, password }) => {
@@ -30,7 +33,7 @@ export const resolvers = {
       const valid = await bcrypt.compare(password, user.password);
       if (!valid) throw new Error('Invalid CPF or password');
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id }, JWT_SECRET);
       return { ...user._doc, token };
     },
     createTransaction: async (_, { receiver, amount }, { user }) => {
