@@ -5,9 +5,8 @@ import User from '../src/models/User.js';
 import Account from '../src/models/Account.js';
 import Transaction from '../src/models/Transaction.js';
 
-// Conexão com o MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
+  dbName: 'woovi_bank'
 });
 
 async function seedDatabase() {
@@ -20,6 +19,7 @@ async function seedDatabase() {
     const users = await User.insertMany([
       { name: 'Alice', cpf: '77005712013', password: passwordHash },
       { name: 'Bob', cpf: '59091028009', password: passwordHash },
+      { name: 'Renan', cpf: '16133910054', password: passwordHash },
     ]);
 
     // Criar contas
