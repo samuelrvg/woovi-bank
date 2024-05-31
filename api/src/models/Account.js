@@ -6,6 +6,4 @@ const accountSchema = new mongoose.Schema({
   balance: { type: Number, default: 0 },
 });
 
-const AccountModel = mongoose.models.Account || mongoose.model('Account', accountSchema);
-
-export default AccountModel;
+export default mongoose.model('Account', accountSchema);

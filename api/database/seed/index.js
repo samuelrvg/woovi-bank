@@ -1,13 +1,13 @@
-import 'dotenv/config';
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import User from '../src/models/User.js';
-import Account from '../src/models/Account.js';
-import Transaction from '../src/models/Transaction.js';
+import mongoose from 'mongoose';
+import User from '../../src/models/User.js';
+import Account from '../../src/models/Account.js';
+import Transaction from '../../src/models/Transaction.js';
 
-mongoose.connect(process.env.MONGODB_URI, {
-  dbName: 'woovi_bank'
-});
+import { config } from '../../src/config.js'
+
+// Conexão com o MongoDB
+mongoose.connect(config.MONGODB_URI);
 
 async function seedDatabase() {
   try {
@@ -19,7 +19,6 @@ async function seedDatabase() {
     const users = await User.insertMany([
       { name: 'Alice', cpf: '77005712013', password: passwordHash },
       { name: 'Bob', cpf: '59091028009', password: passwordHash },
-      { name: 'Renan', cpf: '16133910054', password: passwordHash },
     ]);
 
     // Criar contas
