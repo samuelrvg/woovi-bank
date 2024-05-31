@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
+import logger from 'koa-logger';
 import { ApolloServer } from 'apollo-server-koa';
 import { connectDatabase } from './mongoose.js';
 import { typeDefs } from './schemas/typeDefs.js';
@@ -9,6 +10,8 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const app = new Koa();
 const router = new Router();
+
+app.use(logger());
 
 // Conexão com MongoDB
 await connectDatabase();
@@ -29,6 +32,10 @@ startServer();
 app.use(router.routes());
 app.use(bodyParser());
 app.use(authMiddleware);
+
+app.on('error', (err) => {
+  console.error('Server error', err);
+});
 
 // router.get('/api', authMiddleware, (ctx) => {})
 router.get('/api', (ctx) => {
