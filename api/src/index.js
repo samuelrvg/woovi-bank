@@ -7,6 +7,7 @@ import { connectDatabase } from './mongoose.js';
 import { typeDefs } from './schemas/typeDefs.js';
 import { resolvers } from './resolvers/resolvers.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { config } from './config.js'
 
 const app = new Koa();
 const router = new Router();
@@ -24,7 +25,7 @@ async function startServer() {
   });
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
-  console.log(`🚀 Apollo Server ready at http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`);
+  console.log(`🚀 Apollo Server ready at http://localhost:${config.PORT}${apolloServer.graphqlPath}`);
 }
 
 startServer();
@@ -42,6 +43,6 @@ router.get('/api', (ctx) => {
   ctx.body = { message: 'Hello, Koa API!' };
 });
 
-app.listen({ port: process.env.PORT }, () =>
-  console.log(`🚀 Server ready at http://localhost:${process.env.PORT}`)
+app.listen({ port: config.PORT }, () =>
+  console.log(`🚀 Server ready at http://localhost:${config.PORT}`)
 );
