@@ -1,4 +1,5 @@
 import Koa from 'koa';
+import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 import logger from 'koa-logger';
@@ -12,6 +13,7 @@ import { config } from './config.js'
 const app = new Koa();
 const router = new Router();
 
+app.use(json());
 app.use(logger());
 
 // Conexão com MongoDB
@@ -46,3 +48,6 @@ router.get('/api', (ctx) => {
 app.listen({ port: config.PORT }, () =>
   console.log(`🚀 Server ready at http://localhost:${config.PORT}`)
 );
+
+// export default app;
+// module.exports = app;
