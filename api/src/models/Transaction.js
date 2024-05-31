@@ -6,4 +6,6 @@ const transactionSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
 });
 
-export default mongoose.model('Transaction', transactionSchema);
+const TransactionModel = mongoose.models.Account || mongoose.model('Transaction', transactionSchema);
+
+export default TransactionModel;
