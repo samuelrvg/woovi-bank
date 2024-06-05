@@ -4,7 +4,7 @@ export const typeDefs = gql`
   type User {
     id: ID!
     name: String!
-    cpf: String!
+    cpfCnpj: String!
     token: String
   }
 
@@ -27,8 +27,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    signUp(name: String!, cpf: String!, password: String!): User
-    login(cpf: String!, password: String!): User
+    signUp(name: String!, cpfCnpj: String!, password: String!): User
+    login(cpfCnpj: String!, password: String!): User
     createTransaction(receiver: String!, amount: Float!): Transaction
   }
 `;

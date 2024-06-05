@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  cpf: z.string().min(11, {
+  cpfCnpj: z.string().min(11, {
     message: "CPF must be at least 11 characters.",
   }),
   password: z.string().min(6, {
@@ -35,13 +35,13 @@ const formSchema = z.object({
 interface LoginResponse {
   login: {
     name: string;
-    cpf: string;
+    cpfCnpj: string;
     token: string;
   };
 }
 
 interface LoginVariables {
-  cpf: string;
+  cpfCnpj: string;
   password: string;
 }
 
@@ -51,7 +51,7 @@ export default function SignIn() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      cpf: "59091028009",
+      cpfCnpj: "77005712013",
       password: "woovi#123",
     },
   });
@@ -89,15 +89,15 @@ export default function SignIn() {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="cpf"
+                  name="cpfCnpj"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel htmlFor="cpf">CPF</FormLabel>
+                      <FormLabel htmlFor="cpfCnpj">CPF/CNPJ</FormLabel>
                       <FormControl>
                         <Input
                           type="text"
-                          id="cpf"
-                          placeholder="Digite seu CPF"
+                          id="cpfCnpj"
+                          placeholder="Digite seu CPF/CNPJ"
                           {...field}
                           className="w-full"
                         />

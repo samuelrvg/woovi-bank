@@ -17,8 +17,8 @@ async function seedDatabase() {
 
     // Criar usuários
     const users = await User.insertMany([
-      { name: 'Alice', cpf: '77005712013', password: passwordHash },
-      { name: 'Bob', cpf: '59091028009', password: passwordHash },
+      { name: 'Alice', cpfCnpj: '77005712013', password: passwordHash },
+      { name: 'Bob', cpfCnpj: '59091028009', password: passwordHash },
     ]);
 
     // Criar contas

@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { config } from '../config.js';
 import User from '../models/User.js';
 import Account from '../models/Account.js';
 import Transaction from '../models/Transaction.js';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = config.JWT_SECRET;
 
 export const resolvers = {
   Query: {
@@ -14,29 +15,31 @@ export const resolvers = {
     },
   },
   Mutation: {
-    signUp: async (_, { name, cpf, password }) => {
-      const existingUser = await User.findOne({ cpf });
-      if (existingUser) throw new Error('CPF already registered');
+    signUp: async (_, { name, cpfCnpj, password }) => {
+      const existingUser = await User.findOne({ cpfCnpj });
+      if (existingUser) throw new Error('CPF/CNPJ already registered');
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ name, cpf, password: hashedPassword });
+      const user = new User({ name, cpfCnpj, password: hashedPassword });
       await user.save();
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET);
       return { ...user._doc, token };
     },
-    login: async (_, { cpf, password }) => {
-      const user = await User.findOne({ cpf });
-      if (!user) throw new Error('Invalid CPF or password');
+    login: async (_, { cpfCnpj, password }) => {
+      const user = await User.findOne({ cpfCnpj });
+      if (!user) throw new Error('Invalid CPF/CNPJ or password');
 
       const valid = await bcrypt.compare(password, user.password);
-      if (!valid) throw new Error('Invalid CPF or password');
+      if (!valid) throw new Error('Invalid CPF/CNPJ or password');
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET);
       return { ...user._doc, token };
     },
     createTransaction: async (_, { receiver, amount }, { user }) => {
       if (!user) throw new Error('Not authenticated');
+
+      //TODO: Resolver Idempotência
 
       const senderAccount = await Account.findOne({ userId: user.id });
       const receiverAccount = await Account.findOne({ accountNumber: receiver });
